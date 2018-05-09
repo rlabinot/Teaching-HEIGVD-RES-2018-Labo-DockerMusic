@@ -1,7 +1,7 @@
 {
   "name": "package.json",
   "version": "1.0.0",
-  "description": "musician udp client",
+  "description": "udp client musician",
   "main": "musician.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,5 +11,9 @@
     "url": "."
   },
   "author": "Labinot Rashiti",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.22.1",
+    "uuid": "^3.2.1"
+  }
 }

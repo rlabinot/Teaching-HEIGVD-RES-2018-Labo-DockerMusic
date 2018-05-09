@@ -28,7 +28,7 @@ function Musician(instrument) {
         }
         var payload = JSON.stringify(data);
         var message = new Buffer(payload);
-        server.send(message, protocol.PORT, protocol.MULTICAST_IP, function(err, bytes) {
+		server.send(message, 0, message.length, protocol.PORT, protocol.MULTICAST_IP, function(err, bytes) {
 			console.log("Sending payload: " + payload + " via port " + server.address().port);
 		});
     }
