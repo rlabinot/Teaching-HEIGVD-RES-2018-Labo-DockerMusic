@@ -4,6 +4,7 @@ docker rm $(docker ps -a -q) // container
 docker rmi $(docker images -q) // images
 espace caractere = ctrl + $
 
+npm init , puis package.json
 npm install moment --save // install via npm les packages de la librairie "moment"
 
 // Docker image 

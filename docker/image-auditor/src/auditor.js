@@ -19,21 +19,27 @@ socket.bind(protocol.PORT, function() {
 
 // When the server receive a data from a musician
 socket.on('message', function(msg, source) {
-    console.log("Data has arrived: " + msg + ". Source port: " + source.port);
-    var data = JSON.parse(msg);
-
+    console.log("Data from a Musician has arrived: " + msg + ". Source port: " + source.port);
+    var musician = JSON.parse(msg);
+	var found = false;
+	
     // looking if there is already a musician with same instrument
     for (var i = 0; i < musicians.length; i++) {
-        if (data.uuid == musicians[i].uuid) {
-            musicians[i].activeSince = data.activeSince; // refresh time remaining
+        if (musicians[i].uuid === musician.uuid) {
+            musicians[i].activeSince = musician.activeSince; // refresh time remaining
+			found = true;
             return;
         }
     }
-    musicians.push(data); // adding a new musician
+	
+	if (found == false) {
+		musicians.push(musician);	
+	}
+	
 });
 
 // array to save the actives musicians
-const musicians = [];
+var musicians = [];
 
 
 var tcpServer = net.createServer();
@@ -43,7 +49,7 @@ console.log("TCP Server now running on port : " + protocol.PORT);
 // when there is a telnet connection
 tcpServer.on('connection', function (socket) {
     socket.write(JSON.stringify(musicians));
-	socket.destroy();
+	socket.end();
 });
 
 // check if a musician/instrument is still active
@@ -51,8 +57,8 @@ function checkInstruments() {
     for (var i = 0; i < musicians.length; i++) {
         // determine if a musician is active or not
         if (moment() - musicians[i].activeSince > protocol.DELAY) {
-            console.log('Mucisian removed : ' + JSON.stringify(musicians[i]));
-            musicians.splice(i, 1); // remove the musician from array
+            console.log('Musician removed : ' + JSON.stringify(musicians[i]));
+            musicians.splice(i,1); // remove the musician from array
         }
     }
 }
