@@ -20,16 +20,22 @@ instruments.set("drum", protocol.DRUM);
 function Musician(instrument) {
     this.instrument = instrument;
 
+    // ici, sinon chaque fois qu'un "musicien" envoie une data
+    // il generve un nouvel ID ce qui est problematique !
+    var data = { 
+        uuid: uuid(),
+        instrument: instrument
+    }
+    
     Musician.prototype.sendMessage = function() {
-        var data = { 
-            uuid: uuid(),
-            instrument: instrument,
-            activeSince: moment()
-        }
+        
+        // on update la date/heure avant l'envoi
+        data.activeSince = moment();
+        
         var payload = JSON.stringify(data);
         var message = new Buffer(payload);
 		server.send(message, 0, message.length, protocol.PORT, protocol.MULTICAST_IP, function(err, bytes) {
-			console.log("Sending payload: " + payload + " via port " + server.address().port);
+			console.log("Sending payload: " + payload);
 		});
     }
 

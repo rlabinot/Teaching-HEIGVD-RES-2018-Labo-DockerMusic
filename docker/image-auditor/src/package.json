@@ -1,7 +1,7 @@
 {
   "name": "package.json",
   "version": "1.0.0",
-  "description": "auditor UDP and TCP server",
+  "description": "udp and tcp server auditor",
   "main": "auditor.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,5 +11,8 @@
     "url": "."
   },
   "author": "Labinot Rashiti",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.22.1"
+  }
 }
